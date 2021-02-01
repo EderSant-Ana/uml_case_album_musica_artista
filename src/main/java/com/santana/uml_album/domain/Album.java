@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="tb_album")
 public class Album implements Serializable{
@@ -24,9 +26,11 @@ public class Album implements Serializable{
 	private String nome;
 	private Date ano;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="albuns")
 	private Set<Musica> musicas = new HashSet<>();
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="albuns")
 	private Set<Artista> participantes = new HashSet<>();
 	
