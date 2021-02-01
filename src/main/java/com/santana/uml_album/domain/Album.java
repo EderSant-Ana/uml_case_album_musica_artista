@@ -27,6 +27,9 @@ public class Album implements Serializable{
 	@ManyToMany(mappedBy="albuns")
 	private Set<Musica> musicas = new HashSet<>();
 	
+	@ManyToMany(mappedBy="albuns")
+	private Set<Artista> participantes = new HashSet<>();
+	
 	public Album() {
 		
 	}
@@ -63,6 +66,10 @@ public class Album implements Serializable{
 
 	public Set<Musica> getMusicas() {
 		return musicas;
+	}
+
+	public Set<Artista> getParticipantes() {
+		return participantes;
 	}
 
 	@Override

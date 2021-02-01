@@ -9,8 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.santana.uml_album.domain.Album;
+import com.santana.uml_album.domain.Artista;
 import com.santana.uml_album.domain.Musica;
 import com.santana.uml_album.repositories.AlbumRepository;
+import com.santana.uml_album.repositories.ArtistaRepository;
 import com.santana.uml_album.repositories.MusicaRepository;
 
 
@@ -22,6 +24,8 @@ public class CourseApplication implements CommandLineRunner{
 	private AlbumRepository albumRepository;
 	@Autowired
 	private MusicaRepository musicaRepository;
+	@Autowired
+	private ArtistaRepository artistaRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CourseApplication.class, args);
@@ -51,8 +55,27 @@ public class CourseApplication implements CommandLineRunner{
 		m3.getAlbuns().addAll(Arrays.asList(alb2));
 		m4.getAlbuns().addAll(Arrays.asList(alb3));
 
+
+		
+		Artista a1 = new Artista(null, "Michael Jackson", "USA");
+		Artista a2 = new Artista(null, "Ray Charles", "USA");
+		
+		alb3.getParticipantes().addAll(Arrays.asList(a1, a2));
+		a1.getAlbuns().addAll(Arrays.asList(alb3));
+		a2.getAlbuns().addAll(Arrays.asList(alb3));
+		
+		a1.getMusicasComoAutor().addAll(Arrays.asList(m1, m2, m3, m4));
+		a2.getMusicasComoAutor().addAll(Arrays.asList(m4));
+		
+		m1.getAutores().addAll(Arrays.asList(a1));
+		m2.getAutores().addAll(Arrays.asList(a1));
+		m3.getAutores().addAll(Arrays.asList(a1));
+		m4.getAutores().addAll(Arrays.asList(a2));
+
 		albumRepository.saveAll(Arrays.asList(alb1, alb2, alb3));
 		musicaRepository.saveAll(Arrays.asList(m1, m2, m3, m4));
+		artistaRepository.saveAll(Arrays.asList(a1, a2));
+		
 		
 	}
 

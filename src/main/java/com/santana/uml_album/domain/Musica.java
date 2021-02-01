@@ -1,7 +1,9 @@
 package com.santana.uml_album.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -30,6 +32,9 @@ public class Musica implements Serializable{
 	inverseJoinColumns = @JoinColumn(name="album_id")
 	)
 	private Set<Album> albuns = new HashSet<>();
+	
+	@ManyToMany(mappedBy="musicasComoAutor")	
+	private List<Artista> autores = new ArrayList<>();
 	
 	public Musica() {
 
@@ -68,6 +73,11 @@ public class Musica implements Serializable{
 	public Set<Album> getAlbuns() {
 		return albuns;
 	}
+
+	public List<Artista> getAutores() {
+		return autores;
+	}
+
 
 	@Override
 	public int hashCode() {

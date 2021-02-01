@@ -1,11 +1,18 @@
 package com.santana.uml_album.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +25,20 @@ public class Artista implements Serializable{
 	private Integer id;
 	private String nome;
 	private String nacionalidade;
+	
+	@ManyToMany
+	@JoinTable(name="tb_album_participante",
+			joinColumns = @JoinColumn(name="artista_id"),
+			inverseJoinColumns = @JoinColumn(name="album_id")
+			)
+	private Set<Album> albuns = new HashSet<>();
+	
+	@ManyToMany
+	@JoinTable(name="tb_autores_musicas",
+		joinColumns = @JoinColumn(name="autores_id"),
+		inverseJoinColumns = @JoinColumn(name="musica_id")
+			)	
+	private List<Musica> musicasComoAutor = new ArrayList<>();
 	
 	public Artista() {
 
@@ -52,6 +73,15 @@ public class Artista implements Serializable{
 	public void setNacionalidade(String nacionalidade) {
 		this.nacionalidade = nacionalidade;
 	}
+
+	public Set<Album> getAlbuns() {
+		return albuns;
+	}
+	
+	public List<Musica> getMusicasComoAutor() {
+		return musicasComoAutor;
+	}
+
 
 	@Override
 	public int hashCode() {
